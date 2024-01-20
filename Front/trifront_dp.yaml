@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trifront
+  namespace: tricountapp
+spec:
+  selector:
+    matchLabels:
+      app: trifront
+  template:
+    metadata:
+      labels:
+        app: trifront
+    spec:
+      containers:
+      - name: trifront
+        image: hugo08/hugo_repo:trifront-3
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: VUE_APP_ADDRESS
+          value: "tricount-api.hponthieu.com"

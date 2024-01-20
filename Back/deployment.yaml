@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tricount-back
+  namespace: tricountapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tricount-back
+  template:
+    metadata:
+      labels:
+        app: tricount-back
+    spec:
+      containers:
+      - name: tricount-back
+        image: hugo08/hugo_repo:triback-20
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PG_USER
+          value: "user"
+        - name: PG_HOST
+          value: "postgres-svc"
+        - name: PG_DATABASE
+          value: "database"
+        - name: PG_PASSWORD
+          value: "password"
+        - name: PG_PORT
+          value: "6666"
+        - name: ORIGIN
+          value: "https://tricount.hponthieu.com"
+        - name: PRIVATE_KEY
+          value: "key"
+        - name: COOKIE_DOMAIN
+          value: "hponthieu.com"

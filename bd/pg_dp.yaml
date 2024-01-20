@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: tricountapp
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "user"
+        - name: POSTGRES_PASSWORD
+          value: "password"
+        - name: POSTGRES_DB
+          value: "database"
+        volumeMounts:
+          - mountPath: /docker-entrypoint-initdb.d
+            name: createtables
+      volumes:
+      - name: createtables
+        configMap:
+          name: postgres-init
+        # hostPath:
+        #   path: /home/hponthieu/volumekube/tablesinit.sql
+        #   type: File
+

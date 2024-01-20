@@ -1,0 +1,32 @@
+apiVersion: v1
+data:
+  tablesinit.sql: "DROP TABLE IF EXISTS remboursements; \nDROP TABLE IF EXISTS depenses;\nDROP
+    TABLE IF EXISTS membres; \nDROP TABLE IF EXISTS users;\nDROP TABLE IF EXISTS groupes;\n\nCREATE
+    TABLE users (\n    email varchar(50) PRIMARY KEY NOT NULL UNIQUE,\n    nom varchar(30),\n
+    \   prenom varchar(30),\n    pseudonyme varchar(30),\n    pwd varchar(200) NOT
+    NULL);\n\nCREATE TABLE groupes (\n    id int GENERATED ALWAYS AS IDENTITY PRIMARY
+    KEY NOT NULL UNIQUE,\n    nom varchar(30));\n\n\nCREATE TABLE depenses (\n    id
+    int GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL UNIQUE,\n    idgroupe int,\n
+    \   montant float NOT NULL,\n    utilisateur varchar(50) NOT NULL,\n    description
+    varchar(80),\n    date DATE,\n    FOREIGN KEY (utilisateur) REFERENCES users(email),\n
+    \   FOREIGN KEY (idgroupe) REFERENCES groupes(id));\n\nCREATE TABLE remboursements
+    (\n    iddepense int,\n    idgroupe int,\n    utilisateur varchar(50),\n    part
+    float,\n    FOREIGN KEY (utilisateur) REFERENCES users(email),\n    FOREIGN KEY
+    (iddepense) REFERENCES depenses(id),\n    FOREIGN KEY (idgroupe) REFERENCES groupes(id),\n
+    \   PRIMARY KEY (iddepense,idgroupe,utilisateur));\n\n\nCREATE TABLE membres (\n
+    \   idgroupe int,\n    utilisateur varchar(50),\n    FOREIGN KEY (idgroupe) REFERENCES
+    groupes(id),\n    FOREIGN KEY (utilisateur) REFERENCES users(email),\n    PRIMARY
+    KEY (idgroupe,utilisateur)\n    );\n\nINSERT INTO users (email, nom, prenom,pseudonyme,
+    pwd) VALUES ('manon.dupouy@gmail.com','Dupouy','Manon','Manonette','$2b$10$FGeY55bE7w2rBvJC2GimdORaY3fr94UVOeRBd2vmFA1Aw6iykw5wm');\nINSERT
+    INTO users (email, nom, prenom,pseudonyme, pwd) VALUES ('hugo.ponthieu@gmail.com','Ponthieu','Hugo','Huguette','$2b$10$FGeY55bE7w2rBvJC2GimdORaY3fr94UVOeRBd2vmFA1Aw6iykw5wm');\nINSERT
+    INTO users (email, nom, prenom,pseudonyme, pwd) VALUES ('mafam@gmail.com','ma','fam','maf','$2b$10$FGeY55bE7w2rBvJC2GimdORaY3fr94UVOeRBd2vmFA1Aw6iykw5wm');\nINSERT
+    INTO users (email, nom, prenom,pseudonyme, pwd) VALUES ('theo@gmail.com','the','oo','tete','$2b$10$FGeY55bE7w2rBvJC2GimdORaY3fr94UVOeRBd2vmFA1Aw6iykw5wm');\nINSERT
+    INTO groupes (nom) VALUES ('voyage');\nINSERT INTO groupes (nom) VALUES ('coloc');\nINSERT
+    INTO membres (idgroupe,utilisateur) values (1,'manon.dupouy@gmail.com');\nINSERT
+    INTO membres (idgroupe,utilisateur) values (1,'hugo.ponthieu@gmail.com');\nINSERT
+    INTO membres (idgroupe,utilisateur) values (1,'mafam@gmail.com');\nINSERT INTO
+    membres (idgroupe,utilisateur) values (1,'theo@gmail.com');"
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: tricountapp

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-front
+  namespace: tricountapp
+  labels:
+    name: ingress-front
+  annotations:
+    kubernetes.io/ingres.class: "traefik"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  - host: tricount.hponthieu.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: trifront
+            port: 
+              number: 80
