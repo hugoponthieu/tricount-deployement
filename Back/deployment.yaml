@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tricount-back
-  namespace: tricountapp
+  namespace: tricount2
 spec:
   replicas: 1
   selector:
@@ -32,9 +32,9 @@ spec:
         - name: PG_PASSWORD
           value: "password"
         - name: PG_PORT
-          value: "6666"
+          value: "5432"
         - name: ORIGIN
-          value: "https://tricount.hponthieu.com"
+          value: "https://tricount2.hponthieu.com"
         - name: PRIVATE_KEY
           value: "key"
         - name: COOKIE_DOMAIN

@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: myingress
-  namespace: tricountapp
+  namespace: tricount2
   labels:
     name: myingress
   annotations:
@@ -10,7 +10,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-  - host: tricount-api.hponthieu.com
+  - host: tricount2-api.hponthieu.com
     http:
       paths:
       - pathType: Prefix

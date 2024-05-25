@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trifront
-  namespace: tricountapp
+  namespace: tricount2
 spec:
   selector:
     matchLabels:
@@ -23,4 +23,4 @@ spec:
         - containerPort: 80
         env:
         - name: VUE_APP_ADDRESS
-          value: "tricount-api.hponthieu.com"
+          value: "tricount2-api.hponthieu.com"

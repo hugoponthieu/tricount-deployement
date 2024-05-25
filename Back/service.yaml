@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tricount-back-svc
-  namespace: tricountapp
+  namespace: tricount2
 spec:
   selector:
     app: tricount-back
